@@ -2,9 +2,6 @@
 
 
 <link rel="import" href="../iron-icons/iron-icons.html">
-<link rel="import" href="../iron-collapse/iron-collapse.html">
-
-<link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../paper-menu/paper-menu.html">
 <link rel="import" href="../paper-menu/paper-submenu.html">
 <link rel="import" href="../paper-item/paper-item.html">
@@ -59,7 +56,11 @@ Element to view user menu permissions on the Ordercloud platform
       behaviors: [OC.Behaviours.ApiConsumer, OC.Behaviours.Permissions],
 
       properties: {
-        menu: Object
+        menu: Array
+      },
+
+      ready: function(){
+        this.set('menu', 'permissions');
       }
 
     });
