@@ -4,36 +4,63 @@
 <link rel="import" href="../iron-icons/iron-icons.html">
 <link rel="import" href="../iron-collapse/iron-collapse.html">
 
-<link rel="import" href="../oc-authorization-api/oc-authorization-api.html">
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-menu/paper-menu.html">
+<link rel="import" href="../paper-menu/paper-submenu.html">
+<link rel="import" href="../paper-item/paper-item.html">
+<link rel="import" href="../oc-core-utils/oc-api-consumer-behaviour.html">
+<link rel="import" href="../oc-permissions-behaviour/oc-permissions-behaviour.html">
 
 <!--
 `oc-menu-permissions`
 Element to view user menu permissions on the Ordercloud platform
 
-@demo demo/index.html 
+@demo demo/index.html
 -->
 
 <dom-module id="oc-menu-permissions">
   <template>
     <style>
-      :host {
-        display: block;
+      em {
+        margin-right: 1em;
+      }
+      .menu-trigger {
+        cursor: pointer;
+      }
+      .menu-content {
+        background: rgba(0,0,0,0.1);
       }
     </style>
-    <h2>Hello [[prop1]]</h2>
+    <paper-menu>
+      <template is="dom-repeat" items="[[ menu ]]">
+        <paper-submenu>
+          <paper-item class="menu-trigger">
+            <em class$="[[ item.icon ]]"></em>
+            <span>[[ item.name ]]</span>
+          </paper-item>
+          <paper-menu class="menu-content">
+            <template is="dom-repeat" items="[[ item.submenus ]]" as="submenu">
+              <paper-item>
+                <strong>[[ submenu.name ]]</strong>
+                (<span>[[ submenu.permissions ]]</span>)
+              </paper-item>
+            </template>
+          </paper-menu>
+        </paper-submenu>
+      </template>
+    </paper-menu>
   </template>
 
   <script>
+
     Polymer({
 
       is: 'oc-menu-permissions',
+      behaviors: [OC.Behaviours.ApiConsumer, OC.Behaviours.Permissions],
 
       properties: {
-        prop1: {
-          type: String,
-          value: 'oc-menu-permissions',
-        },
-      },
+        menu: Object
+      }
 
     });
   </script>
