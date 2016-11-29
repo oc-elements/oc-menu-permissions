@@ -2,6 +2,11 @@
 
 
 <link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../iron-icons/communication-icons.html">
+<link rel="import" href="../iron-icons/image-icons.html">
+<link rel="import" href="../iron-icons/social-icons.html">
+<link rel="import" href="../iron-icons/hardware-icons.html">
+<link rel="import" href="../iron-icons/maps-icons.html">
 <link rel="import" href="../paper-menu/paper-menu.html">
 <link rel="import" href="../paper-menu/paper-submenu.html">
 <link rel="import" href="../paper-item/paper-item.html">
@@ -18,8 +23,11 @@ Element to view user menu permissions on the Ordercloud platform
 <dom-module id="oc-menu-permissions">
   <template>
     <style>
-      em {
+
+
+      iron-icon {
         margin-right: 1em;
+        color: #636363;
       }
       .menu-trigger {
         cursor: pointer;
@@ -32,7 +40,7 @@ Element to view user menu permissions on the Ordercloud platform
       <template is="dom-repeat" items="[[ menu ]]">
         <paper-submenu>
           <paper-item class="menu-trigger">
-            <em class$="[[ item.icon ]]"></em>
+            <iron-icon icon="[[item.icon]]"></iron-icon>
             <span>[[ item.name ]]</span>
           </paper-item>
           <paper-menu class="menu-content">
@@ -56,11 +64,16 @@ Element to view user menu permissions on the Ordercloud platform
       behaviors: [OC.Behaviours.ApiConsumer, OC.Behaviours.Permissions],
 
       properties: {
-        menu: Array
+        menu: Array,
+        loading: {
+          type: Boolean,
+          notify: true
+        }
       },
 
-      ready: function(){
-        this.set('menu', 'permissions');
+      refresh: function(){
+        this.loading = false;
+        this.set('menu', this.permissions);
       }
 
     });
